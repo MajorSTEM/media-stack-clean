@@ -1,0 +1,3 @@
+libraries:
+  movies: /data/movies
+  shows: /data/shows

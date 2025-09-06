@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  zurg:
+    image: ghcr.io/linuxserver/zurg:latest
+    ports:
+      - "6767:6767"
+    volumes:
+      - ./zurg-config:/config
+    environment:
+      - TZ=UTC
+  fauxjf:
+    build: ./fauxjf
+    ports:
+      - "3000:3000"
+    environment:
+      - JACKETT_URL=${JACKETT_URL}
+      - JACKETT_API_KEY=${JACKETT_API_KEY}
+      - CACHE_BASE_URL=${CACHE_BASE_URL}
+      - CACHE_API_TOKEN=${CACHE_API_TOKEN}
+    depends_on:
+      - zurg

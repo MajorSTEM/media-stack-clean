@@ -1,0 +1,15 @@
+{
+  "name": "fauxjf",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests\""
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.2",
+    "qs": "^6.11.2",
+    "xml2js": "^0.4.23"
+  }
+}
