@@ -1,35 +1,129 @@
+
+---
+
+```markdown
 # Media Orchestration Stack
 
 ## Overview
-A clean, portfolio-ready stack demonstrating media aggregation and API orchestration patterns.
+This repository presents a **self-hosted media orchestration stack** designed for portfolio and demonstration purposes.  
+It highlights **API-first architecture, containerization, and client integration** practices using Docker Compose and Node.js.
+
+The stack aggregates **distributed, user-owned libraries**, organizes them, and exposes them to client applications (e.g., Infuse, Kodi) via standard protocols like HTTP/WebDAV and a lightweight Jellyfin-compatible API shim.  
+All design decisions emphasize **clean engineering patterns, secure credential handling, and professional documentation**.
+
+---
 
 ## ASCII Architecture
+
 ```
-[Client] -> [fauxjf] -> [Jackett]
-                   \-> [Cache]
-                   \-> [Zurg]
-```
+
+Client (Infuse/Kodi)
+│
+▼
+Faux-Jellyfin API (Node/Express)
+│
+├── search ──▶ Jackett (Torznab)
+│
+├── resolve/stream ──▶ lawful cache provider (HTTPS)
+│
+└── library organization ──▶ Zurg (HTTP/WebDAV)
+
+````
+
+This flow enables client applications to browse/search a library, check cache availability, and stream content via secure HTTPS endpoints.
+
+---
 
 ## Tech Stack
-- Docker Compose
-- Node.js (Express)
-- Jackett
-- Zurg
+
+- **Docker Compose** for orchestration  
+- **Node.js / Express** for API shim  
+- **Jackett (Torznab)** for search endpoints  
+- **Lawful caching provider API** (abstracted, env-driven)  
+- **Zurg** for library organization and WebDAV exposure  
+
+---
 
 ## Key Features
-- Proxy layer (`fauxjf`) for Jackett queries
-- Simple caching provider integration
-- Example Zurg configuration
 
-## Setup
-1. Copy `.env.example` to `.env` and fill in values.
-2. `docker-compose up -d` to start services.
+- API-first compatibility layer (“FauxJellyfin”)  
+- Search → Resolve → Play pipeline with **cached-only results**  
+- Organized library structure for Movies/TV  
+- Containerized services with `.env`-driven secrets  
+- Windows-friendly setup and paths  
+
+---
+
+## Setup (Local / Development)
+
+1. Install prerequisites:
+   - Docker Desktop (with WSL2 enabled if on Windows)
+   - Node.js 20+
+   - Jackett running locally (`http://localhost:9117`)
+
+2. Copy `.env.example` → `.env`, then fill in values:
+   ```bash
+   JACKETT_API_KEY=your_key_here
+   CACHE_API_TOKEN=your_cache_token_here
+````
+
+3. Start the stack:
+
+   ```bash
+   docker compose up -d
+   ```
+
+4. Connect Infuse (or other client):
+
+   * Add server: `http://<YOUR_PC_IP>:8096`
+   * Use any credentials (authentication shim is static)
+
+---
 
 ## Professional Value
-Shows understanding of container orchestration and API composition for media services.
+
+This project demonstrates:
+
+* Designing and documenting an **end-to-end architecture**
+* Building an **API layer** with Node.js and Express
+* Secure handling of credentials with environment variables
+* Using **Docker Compose** to orchestrate multiple services
+* Troubleshooting client/server compatibility
+
+---
 
 ## Security & Ethics
-Configuration avoids questionable content sources and promotes responsible automation.
+
+* **Secrets are never committed**; use `.env` for sensitive keys
+* For remote access, enable TLS, reverse proxy, and IP allowlists
+* Role-based access should be applied if exposed outside localhost
+* This project demonstrates engineering patterns only — no instructions or references to questionable sources are provided
+
+---
 
 ## Next Steps
-Expand fauxjf into a full-featured Jellyfin-compatible shim and add automated tests.
+
+* Harden remote access (VPN or reverse proxy)
+* Add monitoring/log shipping (Grafana/Promtail stack)
+* Extend FauxJellyfin API to handle richer metadata
+* Optional: add request UI and CI/CD checks
+
+---
+
+## Contributing
+
+Contributions welcome! Please follow [Conventional Commits](https://www.conventionalcommits.org/) and check `CONTRIBUTING.md` for details.
+
+````
+
+---
+
+⚡ To apply this:  
+1. Replace your current `README.md` with the content above.  
+2. Commit + push:  
+   ```powershell
+   git add README.md
+   git commit -m "docs: polish README with architecture and security sections"
+   git push origin <branch-name>
+````
+
