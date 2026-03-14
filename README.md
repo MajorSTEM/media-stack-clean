@@ -22,7 +22,7 @@ Client (Infuse/Kodi)
 ▼
 Faux-Jellyfin API (Node/Express)
 │
-├── search ──▶ Jackett (Torznab)
+├── search ──▶ search provider of choice
 │
 ├── resolve/stream ──▶ lawful cache provider (HTTPS)
 │
